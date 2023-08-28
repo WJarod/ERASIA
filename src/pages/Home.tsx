@@ -467,7 +467,7 @@ const Home = () => {
                                                         margin: "0px",
                                                     }}
                                                 >
-                                                    Progression (18 pour le level {userInfo.level + 1}):
+                                                    Progression ({userInfo.eloToUp} pour le level {userInfo.level + 1}):
                                                 </p>
                                             </Grid>
                                             <Grid item xs={12} sx={{
