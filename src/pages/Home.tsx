@@ -308,9 +308,40 @@ const Home = () => {
                         alignItems: "center",
                         alignContent: "center",
                         height: "100vh",
+                        width: "100vw"
                     }}
                 >
-                    <CircularProgressCustom />
+                    <Grid container spacing={2} rowSpacing={2} sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        alignContent: "center",
+                        height: "100vh",
+                        width: "100vw"
+                    }}>
+                        <Grid item xs={12} sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            alignContent: "center",
+
+                        }}>
+                            <img src="/logo2000.png" alt="logo" height="400px" />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <CircularProgressCustom />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Typography
+                                variant="h4"
+                                align="center"
+                                gutterBottom
+                                color="white"
+                            >
+                                Bienvenue {user.username}
+                            </Typography>
+                        </Grid>
+                    </Grid>
                 </Box>
             ) : (
                 <Grid
