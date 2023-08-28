@@ -159,14 +159,23 @@ const Home = () => {
         handleClose();
     };
 
+    //calculer le nombre de map jouer au total 
+
+    let totalMapPlayed = 0;
+    mapPlayed.forEach((map) => {
+        totalMapPlayed += map.played;
+    }
+    );
+
     let progress = 0;
     let min = 0;
     let max = 0;
+    let elo = 0;
     if (userInfo.level) {
         const level = userInfo.level;
         min = faceitLevel[level - 1].min;
         max = faceitLevel[level - 1].max;
-        const elo = userInfo.elo;
+        elo = userInfo.elo;
         progress = ((elo - min) / (max - min)) * 100;
     }
 
@@ -434,12 +443,12 @@ const Home = () => {
                                                     justifyContent: "center",
                                                     alignItems: "center",
                                                     alignContent: "center",
-                                                    height: "80px",
-                                                    width: "80px",
+                                                    height: "40px",
+                                                    width: "40px",
                                                     borderRadius: "50%",
-                                                    border: "5px solid #582C82",
+                                                    border: "2px solid #582C82",
                                                 }}>
-                                                    <h1 style={{ color: "#ffffff", fontSize: "50px" }}>{userInfo.level}</h1>
+                                                    <h1 style={{ color: "#ffffff", fontSize: "20px" }}>{userInfo.level}</h1>
                                                 </Box>
                                             </Grid>
                                             <Grid item xs={7}>
@@ -500,6 +509,16 @@ const Home = () => {
                                                                     margin: "0px",
                                                                 }}
                                                             >
+                                                                ELO - {elo}
+                                                            </p>
+                                                            <p
+                                                                style={{
+                                                                    color: "#ffffff",
+                                                                    fontSize: "14px",
+                                                                    padding: "0px",
+                                                                    margin: "0px",
+                                                                }}
+                                                            >
                                                                 {max}
                                                             </p>
                                                         </div>
@@ -511,8 +530,24 @@ const Home = () => {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Item style={{ height: "100%", }}>
-                                        {/* map played linear */}
                                         <Grid container spacing={0.5}>
+                                        <Grid item xs={5}>
+                                                <Box sx={{
+                                                    backgroundColor: "#202124",
+                                                    display: "flex",
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    alignContent: "center",
+                                                    height: "40px",
+                                                    width: "40px",
+                                                    borderRadius: "50%",
+                                                    border: "2px solid #582C82",
+                                                }}>
+                                                    <h1 style={{ color: "#ffffff", fontSize: "16px" }}>{totalMapPlayed}</h1>
+                                                </Box>
+                                            </Grid>
+                                            <Grid item xs={7}>
+                                            </Grid>
                                             <Grid item xs={12}>
                                                 <Grid container spacing={0}>
                                                     <Grid item xs={12}>
