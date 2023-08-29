@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Calendar, Home, LogIn, LogOut, BarChart } from "react-feather";
 import User from "../models/User";
-import { Avatar, Box, Link, Stack, } from "@mui/material";
+import { Box, Link, Stack, } from "@mui/material";
 
 const NavBar = () => {
 
@@ -29,11 +29,12 @@ const NavBar = () => {
 
     return (
         <Box
+            className="navbar" // Ajoute la classe CSS ici
             sx={{
                 width: "120px",
                 backgroundColor: "#202124",
-                height: '95vh',
-                borderRadius: '20px',
+                height: "95vh",
+                borderRadius: "20px",
             }}
         >
             <Stack sx={{
