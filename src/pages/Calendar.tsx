@@ -6,10 +6,9 @@ import interactionPlugin from "@fullcalendar/interaction";
 import frLocale from "@fullcalendar/core/locales/fr";
 import Dispo from "../models/Dispo";
 import User from "../models/User";
-import { startOfWeek, addDays, format, addMinutes, set } from "date-fns";
-import { create, getByWeek, getByUserAndWeek } from "../services/dispoService";
+import { startOfWeek, format } from "date-fns";
+import { create, getByWeek, getByUserAndWeek, editByUserAndWeek } from "../services/dispoService";
 import {
-    Grid,
     Card,
     CardContent,
     Typography,
@@ -23,6 +22,7 @@ function CalendarPage() {
     const [user, setUser] = useState<User>({} as User);
     const [week, setWeek] = useState<Date>(new Date());
     const [dispoChecked, setDispoChecked] = useState<boolean>(true);
+    const [editDispo, seteditDispo] = useState<boolean>(false);
     const [personalDispo, setPersonalDispo] = useState<Dispo>();
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -71,6 +71,39 @@ function CalendarPage() {
         } catch (error) {
             console.error("Error creating dispo:", error);
         }
+    };
+
+    const handleEditDispo = () => {
+        // set personal dispo in events2
+        if (personalDispo) {
+            const newEvents: any[] = [];
+            personalDispo.dispo.forEach((slot) => {
+                const newEvent = {
+                    title: "Disponible (cliquez pour supprimer)",
+                    start: new Date(slot.start), // Convertir en objet Date
+                    end: new Date(slot.end), // Convertir en objet Date
+                    color: "#582C82",
+                    id: slot.id,
+                    user_name: slot.user_name,
+                };
+                newEvents.push(newEvent);
+            });
+            setEvents2(newEvents);
+        }
+
+        seteditDispo(true);
+    };
+
+    const handleSaveDispo = async () => {
+        const newDispo: Dispo = {
+            user: user,
+            week: week,
+            dispo: events2,
+        };
+        localStorage.setItem("dispo", JSON.stringify(newDispo));
+        setDispoChecked(true);
+        await editByUserAndWeek(week, user._id, newDispo);
+        seteditDispo(false);
     };
 
     useEffect(() => {
@@ -154,9 +187,18 @@ function CalendarPage() {
                         </>
                     ) : (
                         <>
-                            <Typography variant="h5" align="center" gutterBottom sx={{color: "white"}}>
-                                Entrainements
-                            </Typography>
+                            <div style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                alignContent: "center",
+                                marginBottom: "20px"
+                            }}>
+                                <Typography variant="h5" align="center" gutterBottom sx={{ color: "white" }}>
+                                    Entrainements
+                                </Typography>
+                                <button onClick={() => handleEditDispo()}> Modifier mes disponibilités </button>
+                            </div>
                             <div style={{ backgroundColor: "white" }}>
                                 <FullCalendar
                                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -170,13 +212,13 @@ function CalendarPage() {
                                     events={events}
                                 />
                             </div>
-                            {!dispoChecked ? (
+                            {!dispoChecked || editDispo ? (
                                 <div>
                                     <Typography
                                         variant="h5"
                                         align="center"
                                         gutterBottom
-                                        sx={{ marginTop: "10px" }}
+                                        sx={{ marginTop: "10px", color: "white" }}
                                     >
                                         Disponibilités
                                     </Typography>
@@ -207,28 +249,52 @@ function CalendarPage() {
                                             justifyContent: "center",
                                         }}
                                     >
-                                        <button
-                                            onClick={() => {
-                                                setEvents([]);
-                                            }}
-                                        >
-                                            Réinitialiser
-                                        </button>
-                                        <button
-                                            style={{ marginLeft: "40px" }}
-                                            onClick={() => {
-                                                const newDispo: Dispo = {
-                                                    user: user,
-                                                    week: week,
-                                                    dispo: events2,
-                                                };
-                                                localStorage.setItem("dispo", JSON.stringify(newDispo));
-                                                setDispoChecked(true);
-                                                saveDispo(newDispo);
-                                            }}
-                                        >
-                                            Confirmer
-                                        </button>
+                                        {
+                                            editDispo ? (
+                                                <button
+                                                    onClick={() => {
+                                                        seteditDispo(false);
+                                                    }}
+                                                >
+                                                    Annuler
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    onClick={() => {
+                                                        setEvents([]);
+                                                    }}
+                                                >
+                                                    Réinitialiser
+                                                </button>
+                                            )
+                                        }
+                                        {editDispo ? (
+                                            <button
+                                                style={{ marginLeft: "40px" }}
+                                                onClick={() => {
+                                                    handleSaveDispo();
+                                                }
+                                                }
+                                            >
+                                                Sauvegarder
+                                            </button>
+                                        ) : (
+                                            <button
+                                                style={{ marginLeft: "40px" }}
+                                                onClick={() => {
+                                                    const newDispo: Dispo = {
+                                                        user: user,
+                                                        week: week,
+                                                        dispo: events2,
+                                                    };
+                                                    localStorage.setItem("dispo", JSON.stringify(newDispo));
+                                                    setDispoChecked(true);
+                                                    saveDispo(newDispo);
+                                                }}
+                                            >
+                                                Confirmer
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             ) : (

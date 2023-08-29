@@ -19,3 +19,8 @@ export const create = async (newObject: Dispo) => {
     return response.data;
 }
 
+export const editByUserAndWeek = async (week: Date, userId: string, newObject: Dispo) => {
+    const response = await axios.put(`${baseUrl}/editByUserAndWeek/${userId}/${week}`, newObject);
+    return response.data;
+}
+
