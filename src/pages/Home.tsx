@@ -316,8 +316,8 @@ const Home = () => {
                         justifyContent: "center",
                         alignItems: "center",
                         alignContent: "center",
-                        height: "100vh",
-                        width: "100vw"
+                        height: "100%",
+                        width: "100%"
                     }}
                 >
                     <Grid container spacing={2} rowSpacing={2} sx={{
@@ -325,8 +325,8 @@ const Home = () => {
                         justifyContent: "center",
                         alignItems: "center",
                         alignContent: "center",
-                        height: "100vh",
-                        width: "100vw"
+                        height: "100%",
+                        width: "100%"
                     }}>
                         <Grid item xs={12} sx={{
                             display: "flex",
@@ -372,7 +372,6 @@ const Home = () => {
                                     <Box
                                         sx={{
                                             backgroundColor: "#202124",
-                                            //center
                                             display: "flex",
                                             justifyContent: "center",
                                             alignItems: "center",
@@ -467,7 +466,7 @@ const Home = () => {
                                                         margin: "0px",
                                                     }}
                                                 >
-                                                    Progression ({userInfo.eloToUp} pour le level {userInfo.level + 1}):
+                                                    Progression ({userInfo.eloToUp} pour le level {userInfo.level + 1})
                                                 </p>
                                             </Grid>
                                             <Grid item xs={12} sx={{
