@@ -9,6 +9,7 @@ import User from "../models/User";
 import { startOfWeek, format } from "date-fns";
 import { create, getByWeek, getByUserAndWeek, editByUserAndWeek } from "../services/dispoService";
 import {
+    Box,
     Card,
     CardContent,
     Typography,
@@ -160,24 +161,28 @@ function CalendarPage() {
         }
     }, [dispos]);
 
+    const responsiveStyles = {
+        container: {
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+        },
+        card: {
+            width: "100%",
+            borderRadius: "20px",
+            backgroundColor: "#202124",
+        },
+        cardContent: {
+            backgroundColor: "#202124",
+        },
+    };
+
     return (
-        <div
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                alignContent: "center",
-                height: "100vh",
-            }}
-        >
-            <Card
-                sx={{ width: "100%", borderRadius: "20px", backgroundColor: "#202124" }}
-            >
-                <CardContent
-                    sx={{
-                        backgroundColor: "#202124",
-                    }}
-                >
+        <Box sx={responsiveStyles.container}>
+            <Card style={responsiveStyles.card}>
+                <CardContent style={responsiveStyles.cardContent}>
                     {loading ? (
                         <>
                             <Typography variant="h5" align="center" gutterBottom>
@@ -304,7 +309,7 @@ function CalendarPage() {
                     )}
                 </CardContent>
             </Card>
-        </div>
+        </Box>
     );
 }
 const createEventIfAvailable = (
