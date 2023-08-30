@@ -47,6 +47,7 @@ function CalendarPage() {
     const [end, setEnd] = useState<Date>();
 
    const handleOpen2 = (title: string, start: string, end: string) => {
+        console.log(title);
         setTitle(title);
         let startDate = new Date(start);
         let endDate = new Date(end);
