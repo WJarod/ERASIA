@@ -7,7 +7,7 @@ import frLocale from "@fullcalendar/core/locales/fr";
 import Dispo from "../models/Dispo";
 import User from "../models/User";
 import Event from "../models/Event";
-import { postEvent, getEvents } from "../services/eventService";
+import { postEvent, getEvents, deleteEvent } from "../services/eventService";
 import { startOfWeek, format } from "date-fns";
 import {
     create,
@@ -81,6 +81,16 @@ function CalendarPage() {
             ":" +
             minutesString
         );
+    };
+
+    //return boolean if title start by Joueur dispo
+    const isDispo = (title: string) => {
+        return title.startsWith("Joueur dispo");
+    };
+
+    const deleteSpecialEvent = async (title: string) => {
+        await deleteEvent(title);
+        handleClose2();
     };
 
     const handleSelect = (arg: any) => {
@@ -543,6 +553,22 @@ function CalendarPage() {
                         >
                             Fermer
                         </Button>
+                        {/* //button for delete event if !isDispo */}
+                        {!isDispo(title) ? (
+                            <Button
+                                type="button"
+                                variant="contained"
+                                color="primary"
+                                onClick={
+                                    () => deleteSpecialEvent(title)
+                                }
+                                sx={{ marginRight: "20px" }}
+                            >
+                                Supprimer
+                            </Button>
+                        ) : (
+                            <div></div>
+                        )}
                     </div>
 
                     </Box>
