@@ -40,6 +40,47 @@ function CalendarPage() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [open2, setOpen2] = useState(false);
+    const handleClose2 = () => setOpen2(false);
+    const [title, setTitle] = useState("");
+    const [start, setStart] = useState<Date>();
+    const [end, setEnd] = useState<Date>();
+
+   const handleOpen2 = (title: string, start: string, end: string) => {
+        setTitle(title);
+        let startDate = new Date(start);
+        let endDate = new Date(end);
+        setStart(startDate);
+        setEnd(endDate);
+        setOpen2(true);
+    };
+
+    const formatDate = (date: Date) => {
+        if (!date) {
+            return "";
+        }
+        //format date to string
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+        let hour = date.getHours();
+        let minutes = date.getMinutes();
+        let dayString = day < 10 ? "0" + day : day;
+        let monthString = month < 10 ? "0" + month : month;
+        let hourString = hour < 10 ? "0" + hour : hour;
+        let minutesString = minutes < 10 ? "0" + minutes : minutes;
+        return (
+            dayString +
+            "/" +
+            monthString +
+            "/" +
+            year +
+            " " +
+            hourString +
+            ":" +
+            minutesString
+        );
+    };
 
     const handleSelect = (arg: any) => {
         // gen random ID
@@ -278,6 +319,14 @@ function CalendarPage() {
                                     allDaySlot={false}
                                     headerToolbar={false}
                                     events={events}
+                                    //on click on event => open modal with event details
+                                    eventClick={(arg) => {
+                                        handleOpen2(
+                                            arg.event.title,
+                                            arg.event.startStr,
+                                            arg.event.endStr
+                                        );}
+                                    }
                                 />
                             </div>
                             {!dispoChecked || editDispo ? (
@@ -451,6 +500,51 @@ function CalendarPage() {
                         </div>
                     </form>
                 </Box>
+            </Modal>
+            {/* //modal event details */}
+            <Modal open={open2} onClose={handleClose2}>
+                <Box
+                    sx={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        width: 400,
+                        bgcolor: "#ffffff",
+                        boxShadow: 24,
+                        borderRadius: "20px",
+                        p: 4,
+                    }}
+                >
+                    <Typography
+                        variant="h5"
+                        align="center"
+                        sx={{ color: "#202124" }}
+                        gutterBottom
+                    >
+                        {title}
+                    </Typography>
+                    <Typography
+                        variant="h6"
+                        align="center"
+                        sx={{ color: "#202124" }}
+                        gutterBottom
+                    >
+                        {formatDate(start!)} - {formatDate(end!)}
+                    </Typography>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                        <Button
+                            type="button"
+                            variant="contained"
+                            color="secondary"
+                            onClick={handleClose2}
+                            sx={{ marginRight: "20px" }}
+                        >
+                            Fermer
+                        </Button>
+                    </div>
+
+                    </Box>
             </Modal>
         </Box>
     );
