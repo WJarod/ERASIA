@@ -6,12 +6,22 @@ import interactionPlugin from "@fullcalendar/interaction";
 import frLocale from "@fullcalendar/core/locales/fr";
 import Dispo from "../models/Dispo";
 import User from "../models/User";
+import Event from "../models/Event";
+import { postEvent, getEvents } from "../services/eventService";
 import { startOfWeek, format } from "date-fns";
-import { create, getByWeek, getByUserAndWeek, editByUserAndWeek } from "../services/dispoService";
+import {
+    create,
+    getByWeek,
+    getByUserAndWeek,
+    editByUserAndWeek,
+} from "../services/dispoService";
 import {
     Box,
+    Button,
     Card,
     CardContent,
+    Modal,
+    TextField,
     Typography,
 } from "@mui/material";
 import CircularProgressCustom from "../components/CircularProgressCustom";
@@ -19,6 +29,7 @@ import CircularProgressCustom from "../components/CircularProgressCustom";
 function CalendarPage() {
     const [events, setEvents] = useState<any[]>([]);
     const [events2, setEvents2] = useState<any[]>([]);
+    const [specialEvents, setSpecialEvents] = useState<Event[]>([]);
     const [dispos, setDispos] = useState<Dispo[]>();
     const [user, setUser] = useState<User>({} as User);
     const [week, setWeek] = useState<Date>(new Date());
@@ -26,6 +37,9 @@ function CalendarPage() {
     const [editDispo, seteditDispo] = useState<boolean>(false);
     const [personalDispo, setPersonalDispo] = useState<Dispo>();
     const [loading, setLoading] = useState<boolean>(true);
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const handleSelect = (arg: any) => {
         // gen random ID
@@ -107,6 +121,36 @@ function CalendarPage() {
         seteditDispo(false);
     };
 
+    const handleSpecialEventClick = async (e: React.FormEvent) => {
+        e.preventDefault();
+        let event = {
+            title: (e.target as any).title.value,
+            start: (e.target as any).start.value,
+            end: (e.target as any).end.value,
+            description: (e.target as any).description.value,
+        };
+        await postEvent(event);
+        handleClose();
+    };
+
+    useEffect(() => {
+        const fetchEvent = async () => {
+            try {
+                const response = await getEvents();
+                setSpecialEvents(response); // Fetch and set special events
+            } catch (error) {
+                console.error("Error fetching events:", error);
+            }
+        };
+        fetchEvent();
+    }, []);
+
+    useEffect(() => {
+        if (dispos) {
+            createEventIfAvailable(dispos, setEvents, specialEvents); // Pass specialEvents as an argument
+        }
+    }, [dispos, specialEvents]);
+
     useEffect(() => {
         setCurrentWeek();
         const localUser = localStorage.getItem("user");
@@ -157,9 +201,9 @@ function CalendarPage() {
 
     useEffect(() => {
         if (dispos) {
-            createEventIfAvailable(dispos, setEvents); // Pass setEvents as an argument
+            createEventIfAvailable(dispos, setEvents, specialEvents); // Pass specialEvents as an argument
         }
-    }, [dispos]);
+    }, [dispos, specialEvents]);
 
     const responsiveStyles = {
         container: {
@@ -192,17 +236,36 @@ function CalendarPage() {
                         </>
                     ) : (
                         <>
-                            <div style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                                alignContent: "center",
-                                marginBottom: "20px"
-                            }}>
-                                <Typography variant="h5" align="center" gutterBottom sx={{ color: "white" }}>
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    alignContent: "center",
+                                    marginBottom: "20px",
+                                }}
+                            >
+                                <Typography
+                                    variant="h5"
+                                    align="center"
+                                    gutterBottom
+                                    sx={{ color: "white" }}
+                                >
                                     Entrainements
                                 </Typography>
-                                <button onClick={() => handleEditDispo()}> Modifier mes disponibilités </button>
+                                <Box sx={{ display: "flex", alignItems: "center" }}>
+                                    <button onClick={() => handleOpen()}>
+                                        {" "}
+                                        Créer un évènement{" "}
+                                    </button>
+                                    <button
+                                        style={{ marginLeft: "40px" }}
+                                        onClick={() => handleEditDispo()}
+                                    >
+                                        {" "}
+                                        Modifier mes disponibilités{" "}
+                                    </button>
+                                </Box>
                             </div>
                             <div style={{ backgroundColor: "white" }}>
                                 <FullCalendar
@@ -254,32 +317,29 @@ function CalendarPage() {
                                             justifyContent: "center",
                                         }}
                                     >
-                                        {
-                                            editDispo ? (
-                                                <button
-                                                    onClick={() => {
-                                                        seteditDispo(false);
-                                                    }}
-                                                >
-                                                    Annuler
-                                                </button>
-                                            ) : (
-                                                <button
-                                                    onClick={() => {
-                                                        setEvents([]);
-                                                    }}
-                                                >
-                                                    Réinitialiser
-                                                </button>
-                                            )
-                                        }
+                                        {editDispo ? (
+                                            <button
+                                                onClick={() => {
+                                                    seteditDispo(false);
+                                                }}
+                                            >
+                                                Annuler
+                                            </button>
+                                        ) : (
+                                            <button
+                                                onClick={() => {
+                                                    setEvents([]);
+                                                }}
+                                            >
+                                                Réinitialiser
+                                            </button>
+                                        )}
                                         {editDispo ? (
                                             <button
                                                 style={{ marginLeft: "40px" }}
                                                 onClick={() => {
                                                     handleSaveDispo();
-                                                }
-                                                }
+                                                }}
                                             >
                                                 Sauvegarder
                                             </button>
@@ -292,7 +352,10 @@ function CalendarPage() {
                                                         week: week,
                                                         dispo: events2,
                                                     };
-                                                    localStorage.setItem("dispo", JSON.stringify(newDispo));
+                                                    localStorage.setItem(
+                                                        "dispo",
+                                                        JSON.stringify(newDispo)
+                                                    );
                                                     setDispoChecked(true);
                                                     saveDispo(newDispo);
                                                 }}
@@ -309,12 +372,93 @@ function CalendarPage() {
                     )}
                 </CardContent>
             </Card>
+            <Modal open={open} onClose={handleClose}>
+                <Box
+                    sx={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                        transform: "translate(-50%, -50%)",
+                        width: 400,
+                        bgcolor: "#ffffff",
+                        boxShadow: 24,
+                        borderRadius: "20px",
+                        p: 4,
+                    }}
+                >
+                    <Typography
+                        variant="h5"
+                        align="center"
+                        sx={{ color: "#202124" }}
+                        gutterBottom
+                    >
+                        Créer un évènement
+                    </Typography>
+                    <form onSubmit={handleSpecialEventClick}>
+                        <TextField
+                            id="title"
+                            label="Titre"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            required
+                        />
+                        <TextField
+                            id="start"
+                            label="Début"
+                            type="datetime-local"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            required
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                        <TextField
+                            id="end"
+                            label="Fin"
+                            type="datetime-local"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            required
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                        <TextField
+                            id="description"
+                            label="Description"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            required
+                        />
+                        <div style={{ display: "flex", justifyContent: "center" }}>
+                            <Button
+                                type="button"
+                                variant="contained"
+                                color="secondary"
+                                onClick={handleClose}
+                                sx={{ marginRight: "20px" }}
+                            >
+                                Annuler
+                            </Button>
+                            <Button type="submit" variant="contained" color="primary">
+                                Créer
+                            </Button>
+                        </div>
+                    </form>
+                </Box>
+            </Modal>
         </Box>
     );
 }
 const createEventIfAvailable = (
     dispos: Dispo[],
-    setEvents: React.Dispatch<any>
+    setEvents: React.Dispatch<any>,
+    specialEvents: Event[]
 ) => {
     if (dispos) {
         const newEvents: any[] = [];
@@ -381,7 +525,7 @@ const createEventIfAvailable = (
                 }
 
                 const commonEvent = {
-                    title: `Entrainement (${playerNames.join(", ")})`, // Include names of available players
+                    title: `Joueur dispo : ${playerNames.join(", ")}`, // Include names of available players
                     start: commonStartTime,
                     end: commonEndTime,
                     color: "#582C82",
@@ -392,6 +536,22 @@ const createEventIfAvailable = (
 
         // Set the events in the calendar
         setEvents(newEvents);
+    }
+
+    // Add special events to the calendar
+    if (specialEvents) {
+        const newEvents: any[] = [];
+        specialEvents.forEach((event) => {
+            const newEvent = {
+                title: `${event.title} / ${event.description}`,
+                start: new Date(event.start),
+                end: new Date(event.end),
+                color: "#9678d3",
+            };
+            newEvents.push(newEvent);
+        });
+
+        setEvents((prevEvents: any) => [...prevEvents, ...newEvents]);
     }
 };
 
