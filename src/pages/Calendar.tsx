@@ -45,14 +45,15 @@ function CalendarPage() {
     const [title, setTitle] = useState("");
     const [start, setStart] = useState<Date>();
     const [end, setEnd] = useState<Date>();
+    const [id , setId] = useState<string>("");
 
-   const handleOpen2 = (title: string, start: string, end: string) => {
-        console.log(title);
+   const handleOpen2 = (title: string, start: string, end: string, id: string) => {
         setTitle(title);
         let startDate = new Date(start);
         let endDate = new Date(end);
         setStart(startDate);
         setEnd(endDate);
+        setId(id);
         setOpen2(true);
     };
 
@@ -91,6 +92,7 @@ function CalendarPage() {
     const deleteSpecialEvent = async (title: string) => {
         await deleteEvent(title);
         handleClose2();
+        window.location.reload();
     };
 
     const handleSelect = (arg: any) => {
@@ -183,6 +185,7 @@ function CalendarPage() {
         };
         await postEvent(event);
         handleClose();
+        window.location.reload();
     };
 
     useEffect(() => {
@@ -196,12 +199,6 @@ function CalendarPage() {
         };
         fetchEvent();
     }, []);
-
-    useEffect(() => {
-        if (dispos) {
-            createEventIfAvailable(dispos, setEvents, specialEvents); // Pass specialEvents as an argument
-        }
-    }, [dispos, specialEvents]);
 
     useEffect(() => {
         setCurrentWeek();
@@ -275,6 +272,12 @@ function CalendarPage() {
         },
     };
 
+    useEffect(() => {
+        if (dispos) {
+            createEventIfAvailable(dispos, setEvents, specialEvents); // Pass specialEvents as an argument
+        }
+    }, [dispos, specialEvents]);
+
     return (
         <Box sx={responsiveStyles.container}>
             <Card style={responsiveStyles.card}>
@@ -287,7 +290,16 @@ function CalendarPage() {
                             <CircularProgressCustom />
                         </>
                     ) : (
-                        <>
+                        <Box 
+                        sx={{
+                            mb: 2,
+                            display: "flex",
+                            flexDirection: "column",
+                            height: "89vh",
+                            overflow: "hidden",
+                            overflowY: "scroll",
+                          }}
+                        >
                             <div
                                 style={{
                                     display: "flex",
@@ -325,8 +337,8 @@ function CalendarPage() {
                                     initialView="timeGridWeek"
                                     locales={[frLocale]}
                                     locale="fr"
-                                    height="60vh"
-                                    slotMinTime="14:00"
+                                    height={!editDispo ? "82vh" : "65vh" }
+                                    slotMinTime="12:00"
                                     allDaySlot={false}
                                     headerToolbar={false}
                                     events={events}
@@ -335,7 +347,8 @@ function CalendarPage() {
                                         handleOpen2(
                                             arg.event.title,
                                             arg.event.startStr,
-                                            arg.event.endStr
+                                            arg.event.endStr,
+                                            arg.event.id
                                         );}
                                     }
                                 />
@@ -361,7 +374,7 @@ function CalendarPage() {
                                             locales={[frLocale]}
                                             locale="fr"
                                             height="65vh"
-                                            slotMinTime="14:00"
+                                            slotMinTime="12:00"
                                             allDaySlot={false}
                                             headerToolbar={false}
                                             selectable={true}
@@ -428,7 +441,7 @@ function CalendarPage() {
                             ) : (
                                 <div></div>
                             )}
-                        </>
+                        </Box>
                     )}
                 </CardContent>
             </Card>
@@ -560,7 +573,7 @@ function CalendarPage() {
                                 variant="contained"
                                 color="primary"
                                 onClick={
-                                    () => deleteSpecialEvent(title)
+                                    () => deleteSpecialEvent(id)
                                 }
                                 sx={{ marginRight: "20px" }}
                             >
@@ -668,6 +681,7 @@ const createEventIfAvailable = (
                 start: new Date(event.start),
                 end: new Date(event.end),
                 color: "#9678d3",
+                id: event._id,
             };
             newEvents.push(newEvent);
         });

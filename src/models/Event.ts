@@ -3,4 +3,5 @@ export default interface Event {
     start: Date;
     end: Date;
     description: string;
+    _id?: string;
 }

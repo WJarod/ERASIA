@@ -15,6 +15,6 @@ export const getEvents = async () => {
 
 //delete event
 export const deleteEvent = async (id: string) => {
-    const response = await axios.delete(`${baseUrl}/deleteByTitle/${id}`);
+    const response = await axios.delete(`${baseUrl}/${id}`);
     return response.data;
 }
