@@ -1,7 +1,7 @@
 import User from '../models/User';
 import axios from 'axios';
 
-const baseUrl = 'https://teamgh-production.up.railway.app/user';
+const baseUrl = 'erasiaback-production.up.railway.app/user';
 
 export const getAll = async () => {
     const response = await axios.get(baseUrl);

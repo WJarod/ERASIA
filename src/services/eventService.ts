@@ -1,7 +1,7 @@
 import axios from "axios";
 import Event from "../models/Event";
 
-const baseUrl = "https://teamgh-production.up.railway.app/event";
+const baseUrl = "erasiaback-production.up.railway.app/event";
 
 export const postEvent = async (newObject: Event) => {
     const response = await axios.post(baseUrl, newObject);

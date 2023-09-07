@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'https://teamgh-production.up.railway.app/faceit';
+const baseUrl = 'erasiaback-production.up.railway.app/faceit';
 
 export const getWeekStats = async (player_id: string) => {
     const response = await axios.get(`${baseUrl}/week-stats/${player_id}`);
