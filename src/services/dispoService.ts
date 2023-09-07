@@ -1,7 +1,7 @@
 import axios from "axios";
 import Dispo from "../models/Dispo";
 
-const baseUrl = "erasiaback-production.up.railway.app/dispo";
+const baseUrl = "https://erasiaback-production.up.railway.app/dispo";
 
 export const getByWeek = async (week: Date) => {
     const response = await axios.get(`${baseUrl}/findByWeek/${week}`);
