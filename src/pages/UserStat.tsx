@@ -504,8 +504,8 @@ const Home = () => {
                                 <Grid item xs={12}>
                                     {
                                         mapPlayed.map((map) => (
-                                            <div>
-                                                <Grid xs={12}>
+                                            <div key={map.map}>
+                                                <Grid key={map.map} xs={12}>
                                                     <p style={{
                                                         color: "#ffffff",
                                                         fontSize: "12px",
