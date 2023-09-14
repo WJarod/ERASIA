@@ -45,9 +45,9 @@ function CalendarPage() {
     const [title, setTitle] = useState("");
     const [start, setStart] = useState<Date>();
     const [end, setEnd] = useState<Date>();
-    const [id , setId] = useState<string>("");
+    const [id, setId] = useState<string>("");
 
-   const handleOpen2 = (title: string, start: string, end: string, id: string) => {
+    const handleOpen2 = (title: string, start: string, end: string, id: string) => {
         setTitle(title);
         let startDate = new Date(start);
         let endDate = new Date(end);
@@ -290,15 +290,15 @@ function CalendarPage() {
                             <CircularProgressCustom />
                         </>
                     ) : (
-                        <Box 
-                        sx={{
-                            mb: 2,
-                            display: "flex",
-                            flexDirection: "column",
-                            height: "89vh",
-                            overflow: "hidden",
-                            overflowY: "scroll",
-                          }}
+                        <Box
+                            sx={{
+                                mb: 2,
+                                display: "flex",
+                                flexDirection: "column",
+                                height: "89vh",
+                                overflow: "hidden",
+                                overflowY: "scroll",
+                            }}
                         >
                             <div
                                 style={{
@@ -337,7 +337,7 @@ function CalendarPage() {
                                     initialView="timeGridWeek"
                                     locales={[frLocale]}
                                     locale="fr"
-                                    height={!editDispo ? "82vh" : "65vh" }
+                                    height={!editDispo ? "82vh" : "65vh"}
                                     slotMinTime="12:00"
                                     allDaySlot={false}
                                     headerToolbar={false}
@@ -349,7 +349,8 @@ function CalendarPage() {
                                             arg.event.startStr,
                                             arg.event.endStr,
                                             arg.event.id
-                                        );}
+                                        );
+                                    }
                                     }
                                 />
                             </div>
@@ -584,7 +585,7 @@ function CalendarPage() {
                         )}
                     </div>
 
-                    </Box>
+                </Box>
             </Modal>
         </Box>
     );

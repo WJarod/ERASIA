@@ -1,13 +1,13 @@
 
 import { useEffect, useState } from "react";
-import { Calendar, Home, LogIn, LogOut, BarChart } from "react-feather";
-import User from "../models/User";
+import { Calendar, Home, LogIn, LogOut, BarChart, User } from "react-feather";
+import UserModel from "../models/User";
 import { Box, Link, Stack, } from "@mui/material";
 
 const NavBar = () => {
 
     const [userLoggedIn, setUserLoggedIn] = useState(false);
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<UserModel | null>(null);
 
     const fetchLocalUser = () => {
         const user = localStorage.getItem("user");
@@ -51,6 +51,9 @@ const NavBar = () => {
                 </Link>
                 <Link href="/calendar">
                     <Calendar color="white" size={30} />
+                </Link>
+                <Link href="/profile">
+                    <User color="white" size={30} />
                 </Link>
                 <Link href="/stats">
                     <BarChart color="white" size={30} />

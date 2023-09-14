@@ -2,7 +2,7 @@ import React from "react";
 import NavBar from "./components/NavBar";
 import { Route, Routes } from "react-router-dom";
 import AuthGuard from "./helpers/guard";
-import { Grid, ThemeProvider, createTheme } from "@mui/material";
+import { Box, Grid, ThemeProvider, createTheme } from "@mui/material";
 import "./App.css";
 
 // import pages here
@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Calendar from "./pages/Calendar";
 import Stats from "./pages/Stats";
 import Login from "./pages/Login";
+import UserStat from "./pages/UserStat";
 
 function App() {
   const theme = createTheme({
@@ -45,21 +46,34 @@ function App() {
           <NavBar />
         </Grid>
         <Grid item xs={11}>
-          <Routes>
-            <Route
-              path="/"
-              element={<AuthGuard element={<Home />} redirectTo="/login" />}
-            />
-            <Route
-              path="/calendar"
-              element={<AuthGuard element={<Calendar />} redirectTo="/login" />}
-            />
-            <Route
-              path="/stats"
-              element={<AuthGuard element={<Stats />} redirectTo="/login" />}
-            />
-            <Route path="/login" element={<Login />} />
-          </Routes>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100vh",
+              overflow: "auto",
+              overflowY: "scroll",
+            }}>
+            <Routes>
+              <Route
+                path="/"
+                element={<Home />}
+              />
+              <Route
+                path="/calendar"
+                element={<AuthGuard element={<Calendar />} redirectTo="/login" />}
+              />
+              <Route
+                path="/stats"
+                element={<AuthGuard element={<Stats />} redirectTo="/login" />}
+              />
+              <Route
+                path="/profile"
+                element={<AuthGuard element={<UserStat />} redirectTo="/login" />}
+              />
+              <Route path="/login" element={<Login />} />
+            </Routes>
+          </Box>
         </Grid>
       </Grid>
     </ThemeProvider>

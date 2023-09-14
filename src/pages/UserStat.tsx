@@ -352,7 +352,7 @@ const Home = () => {
                         height: "100vh",
                     }}
                 >
-                    <Grid item xs={12} sm={12} md={6} lg={3}>
+                    <Grid item xs={12} sm={6} md={6} lg={3}>
                         <Item style={{ height: "100%" }}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
@@ -405,7 +405,7 @@ const Home = () => {
                             </Grid>
                         </Item>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={6} lg={3}>
+                    <Grid item xs={12} sm={6} md={6} lg={3}>
                         <Item style={{ height: "100%" }}>
                             <Grid container spacing={2}>
                                 <Grid item xs={2}>
@@ -552,12 +552,12 @@ const Home = () => {
                             </Grid>
                         </Item>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
                         <Item style={{ height: "100%" }}>
                             <Line options={options} data={data} />
                         </Item>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={12} lg={6}>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
                         <Item style={{ height: "100%" }}>
                             <Line options={options2} data={data2} />
                         </Item>
