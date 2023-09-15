@@ -20,7 +20,6 @@ const CarouselCustom: React.FC<CarouselProps> = ({users}) => {
             transitionTime={1000}
             interval={5000}
             axis='vertical'
-            width={"100%"}
         >
             {users.map((user: User) => (
                 <UserInfo key={user._id} user={user} />

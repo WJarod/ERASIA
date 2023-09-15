@@ -11,43 +11,50 @@ interface UserInfoProps {
 
 const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     const [stats, setStats] = useState<Stats>({} as Stats);
+    const [localStats, setLocalStats] = useState<Stats[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     const fetchStats = async (id: string) => {
-        // const allStats = await getStats(id);
-        //fake data
-        const allStats = {
-            "player_id": "77ee655c-f477-4986-9aab-13f75c5c33d6",
-            "totalGames": 50,
-            "averages": {
-                "K/D Ratio": 1.26,
-                "K/R Ratio": 0.72,
-                "Headshots %": 40,
-                "Rating": 1.10
-            },
-            "sums": {
-                "Kills": 909,
-                "Deaths": 859,
-                "Assists": 195,
-                "Headshots": 362,
-                "RoundsPlayed": 1290,
-                "Triple Kills": 44,
-                "Quadro Kills": 14,
-                "Penta Kills": 0
-            }
-        }
-
+        const allStats = await getStats(id);
         return allStats;
+    }
+
+    const fetchLocalStat = async (id: string) => {
+        const localStats = localStorage.getItem('stats');
+        if (localStats) {
+            const stats = JSON.parse(localStats);
+            const userStats = stats.find((stat: Stats) => stat.player_id === id);
+            return userStats;
+        }
+        return null;
     }
 
     useEffect(() => {
         const fetchUserStats = async () => {
-            const allStats = await fetchStats(user.faceit_id);
-            setStats(allStats);
-            setLoading(false);
+            try {
+                const allStats = await fetchStats(user.faceit_id);
+                setStats(allStats);
+                // Stocker les données dans le localStorage
+                const currentStats = JSON.parse(localStorage.getItem('stats') || '[]');
+                const updatedStats = currentStats.filter((stat: Stats) => stat.player_id !== user.faceit_id);
+                updatedStats.push(allStats);
+                localStorage.setItem('stats', JSON.stringify(updatedStats));
+                setLoading(false);
+            } catch (error) {
+                console.error("Erreur lors de la récupération des stats en ligne, utilisation du localStorage", error);
+                const localStat = await fetchLocalStat(user.faceit_id);
+                if (localStat) {
+                    setStats(localStat);
+                    setLoading(false);
+                } else {
+                    // Gérer l'erreur si aucune donnée n'est disponible en ligne ou dans le localStorage
+                    console.error("Aucune donnée disponible en ligne ou dans le localStorage");
+                }
+            }
         }
         fetchUserStats();
-    }, []);
+    }, [user.faceit_id]);
+    
 
     return (
         <Grid container spacing={2} rowSpacing={2}

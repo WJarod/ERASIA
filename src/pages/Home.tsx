@@ -134,6 +134,7 @@ useEffect(() => {
                         } />
                     </Grid>
                     <Grid item xs={12} sm={6} md={6} lg={3}>
+                        {/* Maillot 3D */}
                         <Item element={<></>} />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} lg={6}>
