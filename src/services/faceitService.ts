@@ -16,3 +16,8 @@ export const getPlayerInfo = async (player_id: string) => {
     const response = await axios.get(`${baseUrl}/player/${player_id}`);
     return response.data;
 }
+
+export const getStats = async (player_id: string) => {
+    const response = await axios.get(`${baseUrl}/player-stats/${player_id}`);
+    return response.data;
+}

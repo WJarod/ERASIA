@@ -53,7 +53,7 @@ function App() {
           alignContent: "center",
           height: "100vh",
           maxHeight: "100vh",
-          width: "100%",
+          width: "90vw",
           overflow: "auto",
           overflowY: "scroll",
         }}>
