@@ -45,15 +45,18 @@ function App() {
         >
           <NavBar />
         </Grid>
-        <Grid item xs={11}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              height: "100vh",
-              overflow: "auto",
-              overflowY: "scroll",
-            }}>
+        <Grid item xs={11} sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          alignContent: "center",
+          height: "100vh",
+          maxHeight: "100vh",
+          width: "100%",
+          overflow: "auto",
+          overflowY: "scroll",
+        }}>
             <Routes>
               <Route
                 path="/"
@@ -73,7 +76,6 @@ function App() {
               />
               <Route path="/login" element={<Login />} />
             </Routes>
-          </Box>
         </Grid>
       </Grid>
     </ThemeProvider>

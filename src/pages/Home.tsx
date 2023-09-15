@@ -1,11 +1,6 @@
 import {
     Box,
-    Button,
-    Card,
     Grid,
-    LinearProgress,
-    Modal,
-    TextField,
     Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -20,7 +15,6 @@ import {
     Tooltip,
     Legend,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
 import User from "../models/User";
 import UserInfo from "../models/UserInfo";
 import StatsGraph from "../models/StatsGraph";

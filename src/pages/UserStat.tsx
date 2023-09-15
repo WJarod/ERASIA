@@ -1,15 +1,12 @@
 import {
     Box,
     Button,
-    Card,
     Grid,
     LinearProgress,
     Modal,
     TextField,
     Typography,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -29,15 +26,7 @@ import { getWeekGraphStats, getPlayerInfo } from "../services/faceitService";
 import { update } from "../services/userService";
 import Mapplayed from "../models/StatsGraph";
 import CircularProgressCustom from "../components/CircularProgressCustom";
-
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#202124" : "#202124",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-    borderRadius: "20px",
-}));
+import Item from "../components/Item";
 
 const faceitLevel = [
     {
@@ -353,7 +342,7 @@ const Home = () => {
                     }}
                 >
                     <Grid item xs={12} sm={6} md={6} lg={3}>
-                        <Item style={{ height: "100%" }}>
+                        <Item element={
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
                                     <img
@@ -403,10 +392,10 @@ const Home = () => {
                                     </button>
                                 </Grid>
                             </Grid>
-                        </Item>
+                        } />
                     </Grid>
                     <Grid item xs={12} sm={6} md={6} lg={3}>
-                        <Item style={{ height: "100%" }}>
+                        <Item element={
                             <Grid container spacing={2}>
                                 <Grid item xs={2}>
                                     <Box sx={{
@@ -550,22 +539,16 @@ const Home = () => {
                                     }
                                 </Grid>
                             </Grid>
-                        </Item>
+                        } />
                     </Grid>
                     <Grid item xs={12} sm={6} md={6} lg={6}>
-                        <Item style={{ height: "100%" }}>
-                            <Line options={options} data={data} />
-                        </Item>
+                        <Item element={<Line options={options} data={data} />} />
                     </Grid>
                     <Grid item xs={12} sm={6} md={6} lg={6}>
-                        <Item style={{ height: "100%" }}>
-                            <Line options={options2} data={data2} />
-                        </Item>
+                        <Item element={<Line options={options2} data={data2} />} />
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={6}>
-                        <Item style={{ height: "100%" }}>
-                            <Line options={options3} data={data3} />
-                        </Item>
+                        <Item element={<Line options={options3} data={data3} />} />
                     </Grid>
                 </Grid>
             )}

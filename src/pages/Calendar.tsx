@@ -261,6 +261,7 @@ function CalendarPage() {
             justifyContent: "center",
             alignItems: "center",
             height: "100vh",
+            width: "90vw",
         },
         card: {
             width: "100%",
