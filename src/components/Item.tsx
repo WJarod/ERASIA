@@ -15,7 +15,9 @@ const Item: React.FC<ItemProps> = ({ element }) => {
         color: "#FFFFFF",
         height: "100%", 
         display: "flex", 
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
     }}
     >{element}</Paper>;
 };

@@ -11,6 +11,8 @@
     "@fullcalendar/timegrid": "^6.1.8",
     "@mui/material": "^5.14.6",
     "@mui/x-date-pickers": "^6.12.0",
+    "@splinetool/react-spline": "^2.2.6",
+    "@splinetool/runtime": "^0.9.451",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
