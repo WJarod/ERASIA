@@ -9,7 +9,7 @@ import React, { useState, Suspense, useEffect } from "react";
 import User from "../models/User";
 import { getAll } from "../services/userService";
 import CarouselCustom from "../components/Carousel";
-import UserInfo from "../components/UserInfo";
+import EventCalandar from "../components/EventCalandar";
 
 const Home = () => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -114,7 +114,7 @@ useEffect(() => {
                                     justifyContent: "center",
                                     alignItems: "center",
                                     alignContent: "center",
-                                    height: "100%",
+                                    height: "35vh",
                                     width: "100%",
                                 }}>
                                     <img src="/logo2000.png" alt="logo" height="200px" />
@@ -125,7 +125,7 @@ useEffect(() => {
                                     justifyContent: "center",
                                     alignItems: "center",
                                     alignContent: "center",
-                                    height: "100%",
+                                    height: "35vh",
                                     width: "100%",
                                 }}
                                     scene="https://prod.spline.design/eeifoQDe6EzAT3cp/scene.splinecode"
@@ -135,7 +135,7 @@ useEffect(() => {
                     </Grid>
                     <Grid item xs={12} sm={6} md={6} lg={3}>
                         {/* Maillot 3D */}
-                        <Item element={<></>} />
+                        <Item element={<div style={{height: "35vh",}}></div>} />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} lg={6}>
                         <Item element={
@@ -147,10 +147,12 @@ useEffect(() => {
                         } />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} lg={6}>
-                        <Item element={<></>} />
+                        <Item element={
+                            <EventCalandar />
+                        } />
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={6}>
-                        <Item element={<></>} />
+                        <Item element={<div style={{height: "45vh",}}></div>} />
                     </Grid>
                 </Grid>
             )}

@@ -63,7 +63,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                 justifyContent: "center",
                 alignItems: "center",
                 alignContent: "center",
-                height: "100%",
+                height: "35vh",
                 width: "100%",
                 margin: "auto",
             }}
