@@ -10,6 +10,7 @@ import User from "../models/User";
 import { getAll } from "../services/userService";
 import CarouselCustom from "../components/Carousel";
 import EventCalandar from "../components/EventCalandar";
+import { Twitter, Instagram, Twitch, Youtube } from "react-feather";
 
 const Home = () => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -20,6 +21,26 @@ const Home = () => {
 const fetchUsers = async () => {
     const users = await getAll();
     return users;
+}
+
+//button style={{width:"100%"}}
+const buttonStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    alignContent: "center",
+    width:"100%"
+}
+
+const textStyle = {
+    padding: "0px",
+    margin: "0px",
+    marginLeft: "10px",
+}
+
+//handleClick open new tab
+const handleClick = (url: string) => {
+    window.open(url, "_blank");
 }
 
 useEffect(() => {
@@ -134,8 +155,53 @@ useEffect(() => {
                         } />
                     </Grid>
                     <Grid item xs={12} sm={6} md={6} lg={3}>
-                        {/* Maillot 3D */}
-                        <Item element={<div style={{height: "35vh",}}></div>} />
+                        <Item element={
+                        <Grid container sx={{height: "35vh"}}>
+                            <Grid item xs={12}>
+                                <Typography
+                                    variant="h4"
+                                    align="center"
+                                    gutterBottom
+                                    color="white"
+                                >
+                                    Réseaux sociaux
+                                </Typography>
+                            </Grid>
+                            {/* Button Twitter  */}
+                            <Grid item xs={12}>
+                                <button style={buttonStyle} onClick={
+                                    () => handleClick("https://twitter.com/TeamErasia_")
+                                }>
+                                    <Twitter size={25} />
+                                    <p style={textStyle}>Twitter</p>
+                                </button>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <button style={buttonStyle} onClick={
+                                    () => handleClick("https://www.instagram.com/teamerasia/")
+                                }>
+                                    <Instagram size={25} />
+                                    <p style={textStyle}>Instagram</p>
+                                </button>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <button style={buttonStyle} onClick={
+                                    () => handleClick("https://www.twitch.tv/team_erasia")
+                                }>
+                                    <Twitch size={25} />
+                                    <p style={textStyle}>Twitch</p>
+                                </button>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <button style={buttonStyle} onClick={
+                                    () => handleClick("https://www.youtube.com/channel/UCywaLp7V2dscm4GdHZ2d7Tw")
+                                }>
+                                    <Youtube size={25} />
+                                    <p style={textStyle}>Youtube</p>
+                                </button>
+                            </Grid>
+                        </Grid>
+                        } />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} lg={6}>
                         <Item element={

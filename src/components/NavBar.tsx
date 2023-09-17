@@ -31,10 +31,18 @@ const NavBar = () => {
         <Box
             className="navbar" // Ajoute la classe CSS ici
             sx={{
-                width: "120px",
                 backgroundColor: "#202124",
                 height: "95vh",
+                width: "100%",
                 borderRadius: "20px",
+                boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.75)",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-around",
+                alignItems: "center",
+                alignContent: "center",
+                padding: "0px",
+                margin: "0px",
             }}
         >
             <Stack sx={{
@@ -44,20 +52,28 @@ const NavBar = () => {
                 alignContent: 'center',
             }}>
                 <Link href="/">
-                    <img src="/logo2000.png" alt="logo" width="100" height="100" />
+                    <img src="/logo2000.png" alt="logo" width="90%" height="90%" />
                 </Link>
-                <Link href="/">
-                    <Home color="white" size={30} />
-                </Link>
-                <Link href="/calendar">
-                    <Calendar color="white" size={30} />
-                </Link>
-                <Link href="/profile">
-                    <User color="white" size={30} />
-                </Link>
-                <Link href="/stats">
-                    <BarChart color="white" size={30} />
-                </Link>
+                {!userLoggedIn ? (<div></div>) : (
+                    <Link href="/">
+                        <Home color="white" size={30} />
+                    </Link>
+                )}
+                {!userLoggedIn ? (<div></div>) : (
+                    <Link href="/calendar">
+                        <Calendar color="white" size={30} />
+                    </Link>
+                )}
+                {!userLoggedIn ? (<div></div>) : (
+                    <Link href="/profile">
+                        <User color="white" size={30} />
+                    </Link>
+                )}
+                {!userLoggedIn ? (<div></div>) : (
+                    <Link href="/stats">
+                        <BarChart color="white" size={30} />
+                    </Link>
+                )}
                 {userLoggedIn ? (
                     <Link href="/" onClick={logout}>
                         <LogOut color="white" size={30} />

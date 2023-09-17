@@ -32,7 +32,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container spacing={0.5} height="100vh">
+      <Grid container spacing={2} height="100vh">
         <Grid
           item
           xs={1}
@@ -63,16 +63,20 @@ function App() {
                 element={<Home />}
               />
               <Route
+                path="/home"
+                element={<Home />}
+              />
+              <Route
                 path="/calendar"
-                element={<AuthGuard element={<Calendar />} redirectTo="/login" />}
+                element={<AuthGuard element={<Calendar />} redirectTo="/home" />}
               />
               <Route
                 path="/stats"
-                element={<AuthGuard element={<Stats />} redirectTo="/login" />}
+                element={<AuthGuard element={<Stats />} redirectTo="/home" />}
               />
               <Route
                 path="/profile"
-                element={<AuthGuard element={<UserStat />} redirectTo="/login" />}
+                element={<AuthGuard element={<UserStat />} redirectTo="/home" />}
               />
               <Route path="/login" element={<Login />} />
             </Routes>

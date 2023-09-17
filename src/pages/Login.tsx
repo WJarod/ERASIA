@@ -28,6 +28,7 @@ const Login: React.FC = () => {
             alignItems: "center",
             alignContent: "center",
             height: "100vh",
+            width: "100%",
         }}>
             <Grid container justifyContent="center">
                 <Grid item xs={12} sm={8} md={6}>

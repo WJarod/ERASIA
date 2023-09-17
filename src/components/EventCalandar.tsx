@@ -7,6 +7,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import frLocale from "@fullcalendar/core/locales/fr";
 import Event from "../models/Event";
+import { Typography } from "@mui/material";
 
 const EventCalandar = () => {
     const [specialEvents, setSpecialEvents] = useState<Event[]>([]);
@@ -20,17 +21,8 @@ const EventCalandar = () => {
         const fetchEvent = async () => {
             const events = await fetchEvents();
             setSpecialEvents(events);
-            if (events.length > 0) {
-                localStorage.setItem("events", JSON.stringify(events));
-            }
         }
-
-        const localEvents = localStorage.getItem("events");
-        if (localEvents) {
-            setSpecialEvents(JSON.parse(localEvents));
-        } else {
-            fetchEvent();
-        }
+        fetchEvent();
     }, []);
 
     return (
@@ -58,7 +50,17 @@ const EventCalandar = () => {
                     />
                 </div>
             ) : (
-                <CircularProgressCustom />
+                <div style={{
+                    height:"45vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    alignContent: "center",
+                    }}>
+                    <Typography variant="h2" style={{ color: "#582C82" }}>
+                    Pas d'évènements à venir
+                    </Typography>
+                </div>
             )}
         </>
     )
