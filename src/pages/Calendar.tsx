@@ -245,14 +245,8 @@ function CalendarPage() {
         };
 
         // Fetch personal dispos when the week or user._id changes
-        fetchPersonalDispo().then(() => setLoading(false));
+        fetchPersonalDispo()
     }, [week, user._id]);
-
-    useEffect(() => {
-        if (dispos) {
-            createEventIfAvailable(dispos, setEvents, specialEvents); // Pass specialEvents as an argument
-        }
-    }, [dispos, specialEvents]);
 
     const responsiveStyles = {
         container: {
@@ -275,7 +269,9 @@ function CalendarPage() {
 
     useEffect(() => {
         if (dispos) {
-            createEventIfAvailable(dispos, setEvents, specialEvents); // Pass specialEvents as an argument
+            createEventIfAvailable(dispos, setEvents, specialEvents).then(() => {
+                setLoading(false);
+            });
         }
     }, [dispos, specialEvents]);
 
@@ -591,7 +587,7 @@ function CalendarPage() {
         </Box>
     );
 }
-const createEventIfAvailable = (
+const createEventIfAvailable = async (
     dispos: Dispo[],
     setEvents: React.Dispatch<any>,
     specialEvents: Event[]
