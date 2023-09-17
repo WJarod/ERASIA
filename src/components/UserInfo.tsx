@@ -58,7 +58,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
 
     return (
         <Grid container spacing={2} rowSpacing={2}
-            sx={{
+            style={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -70,7 +70,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
         >
             <Grid xs={4} style={{ position: 'relative', height: '300px' }}>
                 <img src="/logo2000.png" alt="logo" style={{ width: '100%', objectFit: 'contain', opacity: '0.5'  }} />
-                <img src="https://d21is3bk1bus90.cloudfront.net/roster_avatars_v2/color/medium/broky.webp" alt="avatar" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', height: '300px' }} />
+                <img src="/maillot.png" alt="avatar" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', height: '300px' }} />
             </Grid>
             <Grid xs={8}>
                 <Grid container spacing={2} rowSpacing={2}>

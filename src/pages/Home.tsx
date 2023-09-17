@@ -11,55 +11,57 @@ import { getAll } from "../services/userService";
 import CarouselCustom from "../components/Carousel";
 import EventCalandar from "../components/EventCalandar";
 import { Twitter, Instagram, Twitch, Youtube } from "react-feather";
+import Blur from "../components/blur";
 
 const Home = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const Spline = React.lazy(() => import('@splinetool/react-spline'));
     const [users, setUsers] = useState<User[]>([]);
-    
+    const [bool, setBool] = useState<boolean>(true);
 
-const fetchUsers = async () => {
-    const users = await getAll();
-    return users;
-}
 
-//button style={{width:"100%"}}
-const buttonStyle = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    alignContent: "center",
-    width:"100%"
-}
+    const fetchUsers = async () => {
+        const users = await getAll();
+        return users;
+    }
 
-const textStyle = {
-    padding: "0px",
-    margin: "0px",
-    marginLeft: "10px",
-}
+    //button style={{width:"100%"}}
+    const buttonStyle = {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center",
+        width: "100%"
+    }
 
-//handleClick open new tab
-const handleClick = (url: string) => {
-    window.open(url, "_blank");
-}
+    const textStyle = {
+        padding: "0px",
+        margin: "0px",
+        marginLeft: "10px",
+    }
 
-useEffect(() => {
-    const fetchUser = async () => {
-        const users = await fetchUsers();
-        setUsers(users);
-        console.log("users: ", users);
-        if(users.length === 5){
-            localStorage.setItem("players", JSON.stringify(users));
+    //handleClick open new tab
+    const handleClick = (url: string) => {
+        window.open(url, "_blank");
+    }
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const users = await fetchUsers();
+            setUsers(users);
+            console.log("users: ", users);
+            if (users.length === 5) {
+                localStorage.setItem("players", JSON.stringify(users));
+            }
         }
-    }
 
-    const localPlayers = localStorage.getItem("players");
-    if(localPlayers){
-        setUsers(JSON.parse(localPlayers));
-    } else {
-        fetchUser();
-    }
-}, []);
+        const localPlayers = localStorage.getItem("players");
+        if (localPlayers) {
+            setUsers(JSON.parse(localPlayers));
+        } else {
+            fetchUser();
+        }
+    }, []);
 
     return (
         <>
@@ -128,7 +130,7 @@ useEffect(() => {
                     }}
                 >
                     <Grid item xs={12} sm={6} md={6} lg={3}>
-                        <Item element={
+                        <Blur bool={bool} children={<Item element={
                             <Suspense fallback={
                                 <div style={{
                                     display: "flex",
@@ -152,73 +154,73 @@ useEffect(() => {
                                     scene="https://prod.spline.design/eeifoQDe6EzAT3cp/scene.splinecode"
                                 />
                             </Suspense>
-                        } />
+                        } />} />
                     </Grid>
                     <Grid item xs={12} sm={6} md={6} lg={3}>
-                        <Item element={
-                        <Grid container sx={{height: "35vh"}}>
-                            <Grid item xs={12}>
-                                <Typography
-                                    variant="h4"
-                                    align="center"
-                                    gutterBottom
-                                    color="white"
-                                >
-                                    Réseaux sociaux
-                                </Typography>
+                        <Blur bool={bool} children={<Item element={
+                            <Grid container sx={{ height: "35vh" }}>
+                                <Grid item xs={12}>
+                                    <Typography
+                                        variant="h4"
+                                        align="center"
+                                        gutterBottom
+                                        color="white"
+                                    >
+                                        Réseaux sociaux
+                                    </Typography>
+                                </Grid>
+                                {/* Button Twitter  */}
+                                <Grid item xs={12}>
+                                    <button style={buttonStyle} onClick={
+                                        () => handleClick("https://twitter.com/TeamErasia_")
+                                    }>
+                                        <Twitter size={25} />
+                                        <p style={textStyle}>Twitter</p>
+                                    </button>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <button style={buttonStyle} onClick={
+                                        () => handleClick("https://www.instagram.com/teamerasia/")
+                                    }>
+                                        <Instagram size={25} />
+                                        <p style={textStyle}>Instagram</p>
+                                    </button>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <button style={buttonStyle} onClick={
+                                        () => handleClick("https://www.twitch.tv/team_erasia")
+                                    }>
+                                        <Twitch size={25} />
+                                        <p style={textStyle}>Twitch</p>
+                                    </button>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <button style={buttonStyle} onClick={
+                                        () => handleClick("https://www.youtube.com/channel/UCywaLp7V2dscm4GdHZ2d7Tw")
+                                    }>
+                                        <Youtube size={25} />
+                                        <p style={textStyle}>Youtube</p>
+                                    </button>
+                                </Grid>
                             </Grid>
-                            {/* Button Twitter  */}
-                            <Grid item xs={12}>
-                                <button style={buttonStyle} onClick={
-                                    () => handleClick("https://twitter.com/TeamErasia_")
-                                }>
-                                    <Twitter size={25} />
-                                    <p style={textStyle}>Twitter</p>
-                                </button>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <button style={buttonStyle} onClick={
-                                    () => handleClick("https://www.instagram.com/teamerasia/")
-                                }>
-                                    <Instagram size={25} />
-                                    <p style={textStyle}>Instagram</p>
-                                </button>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <button style={buttonStyle} onClick={
-                                    () => handleClick("https://www.twitch.tv/team_erasia")
-                                }>
-                                    <Twitch size={25} />
-                                    <p style={textStyle}>Twitch</p>
-                                </button>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <button style={buttonStyle} onClick={
-                                    () => handleClick("https://www.youtube.com/channel/UCywaLp7V2dscm4GdHZ2d7Tw")
-                                }>
-                                    <Youtube size={25} />
-                                    <p style={textStyle}>Youtube</p>
-                                </button>
-                            </Grid>
-                        </Grid>
-                        } />
+                        } />} />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} lg={6}>
-                        <Item element={
+                        <Blur bool={bool} children={<Item element={
                             users.length === 5 ? (
-                                    <CarouselCustom users={users} />
+                                <CarouselCustom users={users} />
                             ) : (
-                                <CircularProgressCustom/>
+                                <CircularProgressCustom />
                             )
-                        } />
+                        } />} />
                     </Grid>
                     <Grid item xs={12} sm={12} md={6} lg={6}>
-                        <Item element={
+                        <Blur bool={bool} children={<Item element={
                             <EventCalandar />
-                        } />
+                        } />} />
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={6}>
-                        <Item element={<div style={{height: "45vh",}}></div>} />
+                        <Blur bool={bool} children={<Item element={<div style={{ height: "45vh", }}></div>} />} />
                     </Grid>
                 </Grid>
             )}
