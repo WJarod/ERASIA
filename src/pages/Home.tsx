@@ -12,6 +12,7 @@ import CarouselCustom from "../components/Carousel";
 import EventCalandar from "../components/EventCalandar";
 import { Twitter, Instagram, Twitch, Youtube } from "react-feather";
 import Blur from "../components/blur";
+import ReactPlayer from 'react-player/youtube'
 
 const Home = () => {
     const [loading, setLoading] = useState<boolean>(true);
@@ -220,7 +221,17 @@ const Home = () => {
                         } />} />
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={6}>
-                        <Blur bool={bool} children={<Item element={<div style={{ height: "45vh", }}></div>} />} />
+                        <Blur bool={bool} children={
+                            bool ? (
+                                <Item element={
+                                    <div style={{height:'45vh'}}></div>
+                                }
+                                />
+                            ) : (
+                                <ReactPlayer className='react-player' url='https://www.youtube.com/watch?v=VVrjVJmkZic' height={'49vh'} width={'100%'} playing={false} volume={0.05} controls={true}/>
+                            )
+                        } 
+                        />
                     </Grid>
                 </Grid>
             )}

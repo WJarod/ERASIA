@@ -19,3 +19,8 @@ button {
     background-color: #FFFFFF;
     color: #582C82;
   }
+
+  .react-player {
+    border-radius: 20px;
+    overflow: hidden;
+  }

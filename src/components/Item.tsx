@@ -2,14 +2,15 @@ import { Paper } from "@mui/material";
 
 interface ItemProps {
     element: React.ReactNode;
+    bool?: boolean;
 } 
 
-const Item: React.FC<ItemProps> = ({ element }) => {
+const Item: React.FC<ItemProps> = ({ element, bool = true}) => {
     return <Paper
     elevation={4}
     sx={{
         backgroundColor: "#202124",
-        padding: "1rem",
+        padding: bool ? "1rem" : "0px",
         textAlign: "center",
         borderRadius: "20px",
         color: "#FFFFFF",
