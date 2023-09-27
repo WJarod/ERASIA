@@ -13,6 +13,21 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     const [stats, setStats] = useState<Stats>({} as Stats);
     const [localStats, setLocalStats] = useState<Stats[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [photo, setPhoto] = useState<string>("");
+
+    const setPhotoByUserName = (username: string) => {
+        if (username === "JezyR6S") {
+            setPhoto("/photo/jezyy.png");
+        } else if (username === "LOVERxD") {
+            setPhoto("/photo/lover.png");
+        } else if (username === "Owwen") {
+            setPhoto("/photo/owwen.png");
+        } else if (username === "Nova") {
+            setPhoto("/photo/nova.png");
+        } else if (username === "SoulsErasia") {
+            setPhoto("/photo/souls.png");
+        }
+    }
 
     const fetchStats = async (id: string) => {
         const allStats = await getStats(id);
@@ -30,6 +45,7 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
     }
 
     useEffect(() => {
+        setPhotoByUserName(user.username);
         const fetchUserStats = async () => {
             try {
                 const allStats = await fetchStats(user.faceit_id);
@@ -68,9 +84,9 @@ const UserInfo: React.FC<UserInfoProps> = ({ user }) => {
                 margin: "auto",
             }}
         >
-            <Grid xs={4} style={{ position: 'relative', height: '300px' }}>
+            <Grid xs={4} style={{ position: 'relative', height: '350px' }}>
                 <img src="/logo2000.png" alt="logo" style={{ width: '100%', objectFit: 'contain', opacity: '0.5'  }} />
-                <img src="/maillot.png" alt="avatar" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', height: '300px' }} />
+                <img src={photo} alt="avatar" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%) ', height: '340px' }} />
             </Grid>
             <Grid xs={8}>
                 <Grid container spacing={2} rowSpacing={2}>
