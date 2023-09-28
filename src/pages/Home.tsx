@@ -18,7 +18,7 @@ const Home = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const Spline = React.lazy(() => import('@splinetool/react-spline'));
     const [users, setUsers] = useState<User[]>([]);
-    const [bool, setBool] = useState<boolean>(true);
+    const [bool, setBool] = useState<boolean>(false);
 
 
     const fetchUsers = async () => {
@@ -228,7 +228,7 @@ const Home = () => {
                                 }
                                 />
                             ) : (
-                                <ReactPlayer className='react-player' url='https://www.youtube.com/watch?v=VVrjVJmkZic' height={'49vh'} width={'100%'} playing={false} volume={0.05} controls={true}/>
+                                <ReactPlayer className='react-player' url='https://www.youtube.com/watch?v=HTi5B6D0Epo' height={'49vh'} width={'100%'} playing={false} volume={0.05} controls={true}/>
                             )
                         } 
                         />
